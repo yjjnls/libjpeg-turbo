@@ -23,7 +23,7 @@ class LibjpegTurboConan(ConanFile):
     homepage = "https://libjpeg-turbo.org"
     license = "BSD 3-Clause, ZLIB"
     exports = ["LICENSE.md"]
-    exports_sources = ["CMakeLists.txt"]
+    exports_sources = ["CMakeLists.txt","helpers/*"]
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False],
@@ -148,10 +148,12 @@ class LibjpegTurboConan(ConanFile):
                         +'set(LINK_FLAGS " -s FORCE_FILESYSTEM=1 --pre-js ${JS_HELPER} -Wno-missing-prototypes")\n'
                         +'if(NOT WITH_12BIT)\n'
                         +'  set(COMPILE_FLAGS "${COMPILE_FLAGS} -DTARGA_SUPPORTED")\n'
-                        +'endif()\n')
+                        +'endif()\n'
+                        +'add_executable(cjpeg ../cjpeg.c ../cdjpeg.c ../rdgif.c ../rdppm.c','\n')
+            os.system("ls -l && ls helpers -l")
 
-            shutil.copy("helpers/sharedlib/helper.js",
-                    os.path.join(self.source_subfolder, "sharedlib/helper.js"))
+            shutil.copy("helpers/helpers.js",
+                    os.path.join(self.source_subfolder, "sharedlib/helpers.js"))
 
             for name in ['cjpeg','djpeg','jpegtran','md5cmp','tjunittest']:
                 shutil.copy("helpers/%s"%name, name)
@@ -199,8 +201,8 @@ class LibjpegTurboConan(ConanFile):
         
 
         cmake = CMake(self)
-        cmake.definitions['ENABLE_STATIC'] = not self.options.shared
-        cmake.definitions['ENABLE_SHARED'] = self.options.shared
+        cmake.definitions['ENABLE_STATIC'] = False if self.is_emscripten() else self.options.shared 
+        cmake.definitions['ENABLE_SHARED'] = True if self.is_emscripten() else self.options.shared
         cmake.definitions['WITH_SIMD'] = False if self.is_emscripten() else self.options.SIMD
         cmake.definitions['WITH_ARITH_ENC'] = self.options.arithmetic_encoder
         cmake.definitions['WITH_ARITH_DEC'] = self.options.arithmetic_decoder
