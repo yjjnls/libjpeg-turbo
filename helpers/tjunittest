@@ -1,0 +1,9 @@
+#!/bin/bash
+
+logfile=libjpeg-turbo-test.log
+echo "========    $(date -R)    ======="  >> $logfile
+echo "  cmd : $0"                         >> $logfile
+echo "  args: $@"                         >> $logfile
+echo "  +"                                >> $logfile
+echo "->node bin/tjunittest.js $@"    >> $logfile
+echo node bin/tjunittest.js $@            >> $logfile

@@ -1,0 +1,16 @@
+#!/bin/bash
+logfile=libjpeg-turbo-test.log
+echo "========    $(date -R)    ======="  >> $logfile
+echo "  cmd : $0"  >> $logfile
+echo "  args: $@"  >> $logfile
+echo "  + ($PWD)"  >> $logfile
+value=$1
+filename=$2
+md5=$(md5sum $2)
+echo <$2>MD5: ${md5}  compare with $1>> $logfile
+if [ "${md5:0:32}" == "$1" ]; then
+  exit 0
+else
+  exit 1
+fi
+
