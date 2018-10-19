@@ -14,6 +14,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL Emscripten)
 
 else()
     target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
+    message("**** target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})")
 endif()
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
 

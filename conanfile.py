@@ -56,11 +56,15 @@ class LibjpegTurboConan(ConanFile):
         except:
             return False
 
+    def build_requirements(self):
+        if platform.system() == "Windows":
+            self.build_requires("nasm/2.13.01@conan/stable")
+
     def configure(self):
         del self.settings.compiler.libcxx
 
-        if self.settings.os == "Windows":
-            self.requires.add("nasm/2.13.01@conan/stable", private=True)
+        #if self.settings.os == "Windows":
+        #    self.requires.add("nasm/2.13.01@conan/stable", private=True)
         if self.settings.compiler == "Visual Studio":
             self.options.remove("fPIC")
 
@@ -201,7 +205,7 @@ class LibjpegTurboConan(ConanFile):
         
 
         cmake = CMake(self)
-        cmake.definitions['ENABLE_STATIC'] = False if self.is_emscripten() else self.options.shared 
+        cmake.definitions['ENABLE_STATIC'] = False if self.is_emscripten() else not self.options.shared 
         cmake.definitions['ENABLE_SHARED'] = True if self.is_emscripten() else self.options.shared
         cmake.definitions['WITH_SIMD'] = False if self.is_emscripten() else self.options.SIMD
         cmake.definitions['WITH_ARITH_ENC'] = self.options.arithmetic_encoder
@@ -224,6 +228,7 @@ class LibjpegTurboConan(ConanFile):
             self.build_configure()
 
     def package(self):
+        self.run("dir  %s"%self.package_folder)
         # remove unneeded directories
         shutil.rmtree(os.path.join(self.package_folder, 'share', 'man'), ignore_errors=True)
         shutil.rmtree(os.path.join(self.package_folder, 'share', 'doc'), ignore_errors=True)

@@ -36,6 +36,7 @@ if __name__ == "__main__":
 
     items = []
     for item in builder.items:
+        
         # skip mingw cross-builds
         if not (platform.system() == "Windows" and item.settings["compiler"] == "gcc" and
                 item.settings["arch"] == "x86"):
@@ -50,6 +51,7 @@ if __name__ == "__main__":
             else:
                 # or just add build
                 items.append(item)
+        
     builder.items = items
 
     builder.run()
