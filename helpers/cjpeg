@@ -1,0 +1,30 @@
+#!/bin/bash
+
+logfile=libjpeg-turbo-test.log
+echo "========    $(date -R)    ======="  >> $logfile
+echo "  cmd : $0"                         >> $logfile
+echo "  args: $@"                         >> $logfile
+echo "  + ($PWD)"                                >> $logfile
+
+args=""
+while [ -n "$1" ]; do
+    case "$1" in
+    -outfile)
+      args="${args} -outfile /WD/$2"
+      shift
+      ;;
+    -*)
+      args="${args} $1"
+      ;;
+    *)
+      if [ $# -eq 1 ]; then
+        args="${args} /WD/$1"
+      else
+        args="${args} $1"
+      fi
+      ;;
+    esac
+    shift
+done
+echo "->node bin/cjpeg.js ${args}"         >> $logfile
+node bin/cjpeg.js ${args}                 >> $logfile
