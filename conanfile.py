@@ -37,7 +37,7 @@ class LibjpegTurboConan(ConanFile):
                "turbojpeg": [True, False],
                "java": [True, False],
                "enable12bit": [True, False]}
-    default_options = "shared=False",\
+    default_options = "shared=True",\
                       "fPIC=True",\
                       "SIMD=True",\
                       "arithmetic_encoder=True",\
