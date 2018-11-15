@@ -1,6 +1,6 @@
 ## Package Status
 
-| Windows | Linux & macOS |
+| Windows | Linux |
 |:---------:|:-----------------:|
 |[![Build status](https://ci.appveyor.com/api/projects/status/github/conanos/libjpeg-turbo?svg=true)](https://ci.appveyor.com/project/conanos/libjpeg-turbo)|[![Build Status](https://travis-ci.org/conanos/libjpeg-turbo.svg)](https://travis-ci.org/conanos/libjpeg-turbo)|
 
