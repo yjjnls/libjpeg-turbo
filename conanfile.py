@@ -12,7 +12,7 @@ except:
         raise Exception('Please use pip install devutils to patch conan for emscripten binding !')
 
 from conans import ConanFile, CMake, AutoToolsBuildEnvironment, tools
-
+from conanos.build import config_scheme
 
 class LibjpegTurboConan(ConanFile):
     name = "libjpeg-turbo"
@@ -37,7 +37,7 @@ class LibjpegTurboConan(ConanFile):
                "turbojpeg": [True, False],
                "java": [True, False],
                "enable12bit": [True, False]}
-    default_options = "shared=True",\
+    default_options = "shared=False",\
                       "fPIC=True",\
                       "SIMD=True",\
                       "arithmetic_encoder=True",\
