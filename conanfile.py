@@ -249,7 +249,7 @@ class LibjpegTurboConan(ConanFile):
 
     def package_info(self):
         if self.is_emscripten():
-            self.cpp_info.libs = ['jpeg', 'turbojpeg']            
+            self.cpp_info.libs = ['turbojpeg']            
         elif self.settings.compiler == "Visual Studio":
             if self.options.shared:
                 self.cpp_info.libs = ['jpeg', 'turbojpeg']
